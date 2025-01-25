@@ -35,6 +35,14 @@ class Student{
         return ID;
     }
 };
+//check for duplicate ID
+bool duplicate_ID(const list<Student>& classroom, int ID){
+    for(const Student& student:classroom){
+        if(student.getID() == ID){
+            return true;
+        }
+    } return false;
+}
 //displays student imformation
 void display_Student(const list<Student>& classroom){
     cout << "\n Student Data: \n";
@@ -102,7 +110,13 @@ int main(){
         Student student;
         cout << "Thong tin sinh vien [" << i + 1 << "]: " << endl;
         student.input();
-        classroom.push_back(student);
+        // Check if ID is duplicate
+        if (duplicate_ID(classroom, student.getID())) {
+            cout << "Ma so sinh vien nay da ton tai. Vui long nhap lai.\n";
+            i--;
+        } else {
+            classroom.push_back(student);
+        }
     }
     int choice;
     do{
@@ -121,7 +135,11 @@ int main(){
             {
                 Student student;
                 student.input();
-                classroom.push_back(student);
+                if (duplicate_ID(classroom, student.getID())) {
+                    cout << "Ma so sinh vien nay da ton tai. Vui long nhap lai.\n";
+                } else{
+                    classroom.push_back(student);
+                }
                 break;
             }
             case 2:
